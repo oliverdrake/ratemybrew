@@ -1,5 +1,5 @@
-<body>
 
+<template name="layout">
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -9,14 +9,12 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Rate my brew</a>
+        <a class="navbar-brand" href="/">Rate my brew</a>
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Dashboard</a></li>
-          <li><a href="#">Settings</a></li>
-          <li><a href="#">Profile</a></li>
-          <li><a href="#">Help</a></li>
+          <li><a href="/">Beers</a></li>
+          <li><a href="/reviews">Reviews</a></li>
         </ul>
         <form class="navbar-form navbar-left">
           <input type="text" class="form-control" placeholder="Search...">
@@ -26,367 +24,20 @@
   </div>
 
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-3 col-md-2 sidebar">
-        {{> beers}}
-      </div>
-      <div class="col-md-10">
-        {{> scoresheet}}
-      </div>
-    </div>
+    {{> yield}}
   </div>
-
-</body>
-
-<template name="scoresheet">
-  <form name="reviewForm">
-    <div class="row">
-      <h3>{{beer.name}}</h3>
-    </div>
-    <div class="row">
-      <div class="form-group">
-        <input type="hidden" value="{{beer._id}}" name="beerId"> 
-      </div>
-      <div class="col-md-3">
-        {{> off_flavours}}
-      </div>
-      <div class="col-md-7">
-        {{> scoring}}
-      </div>
-    </div>
-  </form>
 </template>
 
 
 <template name="beers">
   <ul class="nav nav-sidebar">
     {{# each beers}}
-    <li id="beer_{{_id}}" class="beer">{{name}}</li>
+    <li id="beer_{{_id}}" class="beer"><a href="review/{{_id}}">{{name}}</a></li>
     {{/each}}
   </ul>
 </template>
 
 
-<template name="off_flavours">
-  <div class="form-horizontal">
-  {{#each off_flavours}}
-    {{> off_flavour}}
-  {{/each}}
-  </div>
+<template name="home">
+  Home
 </template>
-
-
-<template name="scoring">
-  <div class="form-group">
-    <div class="row comment">
-      <span id='aroma-error'></span>
-      <input type="text" class="input-large form-control" name="aroma" placeholder="Aroma">
-    </div>
-    <div class="row comment">
-      <span id='flavour-error'></span>
-      <input type="text" class="input-large form-control" name="flavour" placeholder="Flavour">
-    </div>
-    <div class="row">
-      <button type="submit" class="btn btn-default submit-review">Submit</button>
-    </div>
-  </div>
-</template>
-
-
-<template name="off_flavour">
-  <div class="form-group">
-    <label class="col-sm-10 control-label">{{name}}</label>
-    <div class="col-sm-2">
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" class="form-control">
-        </label>
-      </div>
-    </div>
-  </div>
-
-</template>
-
-
-
-<!-- <template name="example">
-    <div class="example">
-        {{players.count}}
-        {{#each players}}
-        {{> player}}
-        {{/each}}
-    </div>
-{{#if selected_name}}
-    <div class="details">
-    <div class="name">{{selected_name}}</div>
-    <button class="inc">Give 5 points</button>
-    </div>
-{{else}}
-    <div class="none">Click a player to select</div>
-{{/if}}
-</template>
-
-<template name="player">
-  <div class="player {{selected}}">
-    <span class="name">{{name}}</span>
-    <span class="score">{{score}}</span>
-  </div>
-</template> -->
-
-
-<!--
-      <template name="testing">
-        <div class="grid_6 omega">
-          <form id="votingform" enctype="multipart/form-data" action="/voting/" method="post">
-            <dl class="zend_form">
-              <fieldset id="fieldset-library_form">
-                <legend>Beer Rating</legend>
-                <dt id="Registration_No-label">
-                  <label for="Registration_No" class="optional">Brewers Number</label>
-                </dt>
-                <dt id="BJCP-label">
-                  <label for="BJCP" class="optional">Selected BJCP style</label>
-                </dt>
-                <dd>
-                  <input type="text" name="BJCP" id="BJCP" value="" readonly="readonly" class="formText ">
-                  </dd>
-                  <dt id="Ingredients-label">
-                    <label for="Ingredients" class="optional">Brewers Ingredients</label>
-                  </dt>
-                  <dd>
-                    <textarea name="Ingredients" id="Ingredients" readonly="readonly" class="formTextarea " rows="4" cols="30">
-                    </textarea>
-                  </dd>
-                  <dt id="ABV-label">
-                    <label for="ABV" class="optional">Actual ABV</label>
-                  </dt>
-                  <dd>
-                    <input type="text" name="ABV" id="ABV" value="" readonly="readonly" class="formText ">
-                    </dd>
-                    <dt id="IBU-label">
-                      <label for="IBU" class="optional">Actual IBU</label>
-                    </dt>
-                    <dd>
-                      <input type="text" name="IBU" id="IBU" value="" readonly="readonly" class="formText ">
-                      </dd>
-                      <dt id="status-label">
-                        <label for="status" class="optional">Delivery Status</label>
-                      </dt>
-                      <dd>
-                        <select name="status" id="status" class="formSelect ">
-                          <option value="" label="Received">Received</option>
-                          <option value="Did not receive" label="Did not receive">Did not receive</option>
-                          <option value="Damaged bottle" label="Damaged bottle">Damaged bottle</option>
-                        </select>
-                      </dd>
-                      <dt id="Aroma-label">
-                        <label for="Aroma" class="required">Aroma</label>
-                      </dt>
-                      <dd>
-                        <input type="text" name="Aroma" id="Aroma" value="" default="0" class="spinner ">
-                          <span class="description">out of 12</span>
-                        </dd>
-                        <dt id="Aroma_note-label">
-                          <label for="Aroma_note" class="optional">Aroma Note</label>
-                        </dt>
-                        <dd>
-                          <textarea name="Aroma_note" id="Aroma_note" placeholder="Comment on malt, hops, esters, and other aromatics" class="formTextarea " rows="4" cols="30">
-                          </textarea>
-                        </dd>
-                        <dt id="Appearance-label">
-                          <label for="Appearance" class="required">Appearance</label>
-                        </dt>
-                        <dd>
-                          <input type="text" name="Appearance" id="Appearance" value="" default="0" class="spinner ">
-                            <span class="description">out of 3</span>
-                          </dd>
-                          <dt id="Appearance_note-label">
-                            <label for="Appearance_note" class="optional">Appearance Note</label>
-                          </dt>
-                          <dd>
-                            <textarea name="Appearance_note" id="Appearance_note" placeholder="Comment on color, clarity, and head (retention, color, and texture)" class="formTextarea " rows="4" cols="30">
-                            </textarea>
-                          </dd>
-                          <dt id="Flavor-label">
-                            <label for="Flavor" class="required">Flavor</label>
-                          </dt>
-                          <dd>
-                            <input type="text" name="Flavor" id="Flavor" value="" default="0" class="spinner ">
-                              <span class="description">out of 20</span>
-                            </dd>
-                            <dt id="Flavor_note-label">
-                              <label for="Flavor_note" class="optional">Flavor Note</label>
-                            </dt>
-                            <dd>
-                              <textarea name="Flavor_note" id="Flavor_note" placeholder="Comment on malt, hops, fermentation characteristics, balance, finish/aftertaste, and other flavor characteristics" class="formTextarea " rows="4" cols="30">
-                              </textarea>
-                            </dd>
-                            <dt id="Mouthfeel-label">
-                              <label for="Mouthfeel" class="required">Mouthfeel</label>
-                            </dt>
-                            <dd>
-                              <input type="text" name="Mouthfeel" id="Mouthfeel" value="" default="0" class="spinner ">
-                                <span class="description">out of 5</span>
-                              </dd>
-                              <dt id="Mouthfeel_note-label">
-                                <label for="Mouthfeel_note" class="optional">Mouthfeel Note</label>
-                              </dt>
-                              <dd>
-                                <textarea name="Mouthfeel_note" id="Mouthfeel_note" placeholder="Comment on body, carbonation, warmth, creaminess, astringency, and other palate sensations" class="formTextarea " rows="4" cols="30">
-                                </textarea>
-                              </dd>
-                              <dt id="Overall-label">
-                                <label for="Overall" class="required">Overall</label>
-                              </dt>
-                              <dd>
-                                <input type="text" name="Overall" id="Overall" value="" default="0" class="spinner ">
-                                  <span class="description">out of 10</span>
-                                </dd>
-                                <dt id="Overall_note-label">
-                                  <label for="Overall_note" class="optional">Overall Note</label>
-                                </dt>
-                                <dd>
-                                  <textarea name="Overall_note" id="Overall_note" placeholder="Comment on overall drinking pleasure associated with entry, give suggestions for improvement" class="formTextarea " rows="4" cols="30">
-                                  </textarea>
-                                </dd>
-                                <dt id="Acetaldehyde-label">
-                                  <label for="Acetaldehyde" class="optional">Acetaldehyde</label>
-                                </dt>
-                                <dd>
-                                  <input type="hidden" name="Acetaldehyde" value="0">
-                                    <input type="checkbox" name="Acetaldehyde" id="Acetaldehyde" value="1" class="formCheckbox ">
-                                      <span class="description">Green apple-like aroma and flavor.</span>
-                                    </dd>
-                                    <dt id="Alcoholic-label">
-                                      <label for="Alcoholic" class="optional">Alcoholic</label>
-                                    </dt>
-                                    <dd>
-                                      <input type="hidden" name="Alcoholic" value="0">
-                                        <input type="checkbox" name="Alcoholic" id="Alcoholic" value="1" class="formCheckbox ">
-                                          <span class="description">The aroma, flavor, and warming effect of ethanol and higher alcohols. Sometimes described as hot.</span>
-                                        </dd>
-                                        <dt id="Astringent-label">
-                                          <label for="Astringent" class="optional">Astringent</label>
-                                        </dt>
-                                        <dd>
-                                          <input type="hidden" name="Astringent" value="0">
-                                            <input type="checkbox" name="Astringent" id="Astringent" value="1" class="formCheckbox ">
-                                              <span class="description">Puckering, lingering harshness and/or dryness in the finish/aftertaste; harsh graininess; huskiness.</span>
-                                            </dd>
-                                            <dt id="Diacetyl-label">
-                                              <label for="Diacetyl" class="optional">Diacetyl</label>
-                                            </dt>
-                                            <dd>
-                                              <input type="hidden" name="Diacetyl" value="0">
-                                                <input type="checkbox" name="Diacetyl" id="Diacetyl" value="1" class="formCheckbox ">
-                                                  <span class="description">Artificial butter, butterscotch, or toffee aroma and flavor. Sometimes perceived as a slickness on the tongue.</span>
-                                                </dd>
-                                                <dt id="DMS-label">
-                                                  <label for="DMS" class="optional">DMS (dimethyl sulfide)</label>
-                                                </dt>
-                                                <dd>
-                                                  <input type="hidden" name="DMS" value="0">
-                                                    <input type="checkbox" name="DMS" id="DMS" value="1" class="formCheckbox ">
-                                                      <span class="description">At low levels a sweet, cooked or canned corn-like aroma and flavor.</span>
-                                                    </dd>
-                                                    <dt id="Estery-label">
-                                                      <label for="Estery" class="optional">Estery</label>
-                                                    </dt>
-                                                    <dd>
-                                                      <input type="hidden" name="Estery" value="0">
-                                                        <input type="checkbox" name="Estery" id="Estery" value="1" class="formCheckbox ">
-                                                          <span class="description">Aroma and/or flavor of any ester (fruits, fruit flavorings, or roses).</span>
-                                                        </dd>
-                                                        <dt id="Grassy-label">
-                                                          <label for="Grassy" class="optional">Grassy</label>
-                                                        </dt>
-                                                        <dd>
-                                                          <input type="hidden" name="Grassy" value="0">
-                                                            <input type="checkbox" name="Grassy" id="Grassy" value="1" class="formCheckbox ">
-                                                              <span class="description">Aroma/flavor of fresh-cut grass or green leaves.</span>
-                                                            </dd>
-                                                            <dt id="LightStruck-label">
-                                                              <label for="LightStruck" class="optional">Light Struck</label>
-                                                            </dt>
-                                                            <dd>
-                                                              <input type="hidden" name="LightStruck" value="0">
-                                                                <input type="checkbox" name="LightStruck" id="LightStruck" value="1" class="formCheckbox ">
-                                                                  <span class="description">Similar to the aroma of a skunk.</span>
-                                                                </dd>
-                                                                <dt id="Metallic-label">
-                                                                  <label for="Metallic" class="optional">Metallic</label>
-                                                                </dt>
-                                                                <dd>
-                                                                  <input type="hidden" name="Metallic" value="0">
-                                                                    <input type="checkbox" name="Metallic" id="Metallic" value="1" class="formCheckbox ">
-                                                                      <span class="description">Tinny, coiny, copper, iron, or blood-like flavor.</span>
-                                                                    </dd>
-                                                                    <dt id="Musty-label">
-                                                                      <label for="Musty" class="optional">Musty</label>
-                                                                    </dt>
-                                                                    <dd>
-                                                                      <input type="hidden" name="Musty" value="0">
-                                                                        <input type="checkbox" name="Musty" id="Musty" value="1" class="formCheckbox ">
-                                                                          <span class="description">Stale, musty, or moldy aromas/flavors.</span>
-                                                                        </dd>
-                                                                        <dt id="Oxidized-label">
-                                                                          <label for="Oxidized" class="optional">Oxidized</label>
-                                                                        </dt>
-                                                                        <dd>
-                                                                          <input type="hidden" name="Oxidized" value="0">
-                                                                            <input type="checkbox" name="Oxidized" id="Oxidized" value="1" class="formCheckbox ">
-                                                                              <span class="description">Any one or combination of stale, winy/vinous, cardboard, papery, or sherry-like aromas and flavors.</span>
-                                                                            </dd>
-                                                                            <dt id="Phenolic-label">
-                                                                              <label for="Phenolic" class="optional">Phenolic</label>
-                                                                            </dt>
-                                                                            <dd>
-                                                                              <input type="hidden" name="Phenolic" value="0">
-                                                                                <input type="checkbox" name="Phenolic" id="Phenolic" value="1" class="formCheckbox ">
-                                                                                  <span class="description">Spicy (clove, pepper), smoky, plastic, plastic adhesive strip, and/or medicinal (chlorophenolic).</span>
-                                                                                </dd>
-                                                                                <dt id="Solvent-label">
-                                                                                  <label for="Solvent" class="optional">Solvent</label>
-                                                                                </dt>
-                                                                                <dd>
-                                                                                  <input type="hidden" name="Solvent" value="0">
-                                                                                    <input type="checkbox" name="Solvent" id="Solvent" value="1" class="formCheckbox ">
-                                                                                      <span class="description">Aromas and flavors of higher alcohols (fusel alcohols). Similar to acetone or lacquer thinner aromas.</span>
-                                                                                    </dd>
-                                                                                    <dt id="SourAcidic-label">
-                                                                                      <label for="SourAcidic" class="optional">Sour/Acidic</label>
-                                                                                    </dt>
-                                                                                    <dd>
-                                                                                      <input type="hidden" name="SourAcidic" value="0">
-                                                                                        <input type="checkbox" name="SourAcidic" id="SourAcidic" value="1" class="formCheckbox ">
-                                                                                          <span class="description">Tartness in aroma and flavor. Can be sharp and clean (lactic acid), or vinegar-like (acetic acid).</span>
-                                                                                        </dd>
-                                                                                        <dt id="Sulfur-label">
-                                                                                          <label for="Sulfur" class="optional">Sulfur</label>
-                                                                                        </dt>
-                                                                                        <dd>
-                                                                                          <input type="hidden" name="Sulfur" value="0">
-                                                                                            <input type="checkbox" name="Sulfur" id="Sulfur" value="1" class="formCheckbox ">
-                                                                                              <span class="description">The aroma of rotten eggs or burning matches.</span>
-                                                                                            </dd>
-                                                                                            <dt id="Vegetal-label">
-                                                                                              <label for="Vegetal" class="optional">Vegetal</label>
-                                                                                            </dt>
-                                                                                            <dd>
-                                                                                              <input type="hidden" name="Vegetal" value="0">
-                                                                                                <input type="checkbox" name="Vegetal" id="Vegetal" value="1" class="formCheckbox ">
-                                                                                                  <span class="description">Cooked, canned, or rotten vegetable aroma and flavor (cabbage, onion, celery, asparagus, etc.)</span>
-                                                                                                </dd>
-                                                                                                <dt id="Yeasty-label">
-                                                                                                  <label for="Yeasty" class="optional">Yeasty</label>
-                                                                                                </dt>
-                                                                                                <dd>
-                                                                                                  <input type="hidden" name="Yeasty" value="0">
-                                                                                                    <input type="checkbox" name="Yeasty" id="Yeasty" value="1" class="formCheckbox ">
-                                                                                                      <span class="description">A bready, sulfury or yeast-like aroma or flavor</span>
-                                                                                                    </dd>
-                                                                                                  </fieldset>
-                                                                                                </dl>
-                                                                                              </form>
-                                                                                            </div>
-                                                                                          </template> -->

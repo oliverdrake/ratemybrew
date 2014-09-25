@@ -1,0 +1,56 @@
+<template name="scoresheet">
+  <form name="reviewForm">
+
+    <div class="row">
+      <div class="form-group">
+        <input type="hidden" value="{{_id}}" name="beerId">
+      </div>
+      <div class="col-md-4">
+        {{> off_flavours}}
+      </div>
+      <div class="col-md-8">
+        <div class="form-group">
+          <h3>{{name}}</h3>
+        </div>
+        {{> scoring}}
+      </div>
+    </div>
+  </form>
+</template>
+
+<template name="scoring">
+  <div class="form-group">
+    <div class="row comment">
+      <span id='aroma-error'></span>
+      <textarea class="input-large form-control" name="aroma" placeholder="Aroma"></textarea>
+    </div>
+    <div class="row comment">
+      <span id='flavour-error'></span>
+      <textarea rows="4" class="input-large form-control" name="flavour" placeholder="Flavour"></textarea>
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-default submit-review">Submit</button>
+    </div>
+  </div>
+</template>
+
+
+<template name="off_flavours">
+  <div class="container-fluid">
+  {{#each off_flavours}}
+    {{> off_flavour}}
+  {{/each}}
+  </div>
+</template>
+
+
+<template name="off_flavour">
+  <div class="form-group">
+      <div class="checkbox">
+          <label>
+                <span>{{name}}</span>
+                <input type="checkbox" class="checkbox-style-2 right">
+          </label>
+      </div>
+  </div>
+</template>
