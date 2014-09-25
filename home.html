@@ -1,45 +1,105 @@
-<head>
-    <title>scoresheet</title>
-    <meta name="viewport" content="width=device-width, user-scalable=no">
-</head>
-
 <body>
-    <div class="outer">
-        {{> off_flavours}}
 
-        <!-- {{> example}} -->
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Rate my brew</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Settings</a></li>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">Help</a></li>
+        </ul>
+        <form class="navbar-form navbar-left">
+          <input type="text" class="form-control" placeholder="Search...">
+        </form>
+      </div>
     </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar">
+        {{> beers}}
+      </div>
+      <div class="col-md-10">
+        {{> scoresheet}}
+      </div>
+    </div>
+  </div>
+
 </body>
+
+<template name="scoresheet">
+  <form name="reviewForm">
+    <div class="row">
+      <h3>{{beer.name}}</h3>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <input type="hidden" value="{{beer._id}}" name="beerId"> 
+      </div>
+      <div class="col-md-3">
+        {{> off_flavours}}
+      </div>
+      <div class="col-md-7">
+        {{> scoring}}
+      </div>
+    </div>
+  </form>
+</template>
+
+
+<template name="beers">
+  <ul class="nav nav-sidebar">
+    {{# each beers}}
+    <li id="beer_{{_id}}" class="beer">{{name}}</li>
+    {{/each}}
+  </ul>
+</template>
 
 
 <template name="off_flavours">
   <div class="form-horizontal">
-
   {{#each off_flavours}}
-    {{> offflavour}}
+    {{> off_flavour}}
   {{/each}}
-
-    <!-- <div class="form-group">
-      <label class="col-sm-2 control-label">Without label text</label>
-      <div class="col-sm-10">
-        <div class="checkbox">
-          <label>
-            <input type="checkbox">
-          </label>
-        </div>
-      </div>
-  	</div> -->
   </div>
 </template>
 
 
-<template name="offflavour">
+<template name="scoring">
   <div class="form-group">
-    <label class="col-sm-2 control-label">{{name}}</label>
-    <div class="col-sm-10">
+    <div class="row comment">
+      <span id='aroma-error'></span>
+      <input type="text" class="input-large form-control" name="aroma" placeholder="Aroma">
+    </div>
+    <div class="row comment">
+      <span id='flavour-error'></span>
+      <input type="text" class="input-large form-control" name="flavour" placeholder="Flavour">
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-default submit-review">Submit</button>
+    </div>
+  </div>
+</template>
+
+
+<template name="off_flavour">
+  <div class="form-group">
+    <label class="col-sm-10 control-label">{{name}}</label>
+    <div class="col-sm-2">
       <div class="checkbox">
         <label>
-          <input type="checkbox"> {{description}}
+          <input type="checkbox" class="form-control">
         </label>
       </div>
     </div>
@@ -49,7 +109,7 @@
 
 
 
-<template name="example">
+<!-- <template name="example">
     <div class="example">
         {{players.count}}
         {{#each players}}
@@ -71,7 +131,7 @@
     <span class="name">{{name}}</span>
     <span class="score">{{score}}</span>
   </div>
-</template>
+</template> -->
 
 
 <!--

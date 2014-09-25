@@ -16,12 +16,18 @@ label{
 	display:inline;
 }
 
+.checkbox {
+  margin: 50px 0 0 0;
+}
 
+.comment {
+  margin: 10px 0;
+}
 
 /*existing stuff:*/
 
 .outer {
-    max-width: 600px;
+    max-width: 80%;
     margin: 0 auto;
 }
 
