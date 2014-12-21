@@ -5,13 +5,13 @@
         <strong>Date</strong>
       </div>
       <div class="col-md-3">
+        <strong>Beer Name</strong>
+      </div>
+      <div class="col-md-3">
         <strong>Aroma</strong>
       </div>
       <div class="col-md-3">
         <strong>Flavour</strong>
-      </div>
-      <div class="col-md-3">
-        <strong>Beer Name</strong>
       </div>
     </div>
     {{#each reviews}}
@@ -20,15 +20,106 @@
         {{submitted}}
       </div>
       <div class="col-md-3">
+        <a href="review/{{_id}}">{{beerName}}</a>
+      </div>
+      <div class="col-md-3">
         {{comments.aroma}}
       </div>
       <div class="col-md-3 resizable">
         <span>{{comments.flavour}}</span>
       </div>
-      <div class="col-md-3">
-        {{beerName}}
-      </div>
     </div>
     {{/each}}
   </div>
+</template>
+
+<template name="review">
+  <div class="container-fluid">
+    <h1 class="page-header">{{beerName}} Review</h1>
+
+    <div class="row">
+      <div class="col-lg-5">
+        {{> review_score}}
+
+        {{> review_off_flavours}}
+
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4>Vitals</h4></div>
+          <div class="panel-body">
+            <p>Reviewed by {{reviewer}} on {{submitted}}</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-lg-7">
+        {{> review_comments}}
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="review_off_flavours">
+  <div class="panel panel-default">
+    <div class="panel-heading"><h4>Off Flavours</h4></div>
+    <div class="panel-body">
+
+      <div class="panel-group" id="accordion">
+
+        {{#each offFlavours}}
+        <div class="panel panel-default">
+            <div class="panel-heading off-flavour">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{name}}">{{name}}</a>
+                </h4>
+            </div>
+            <div id="collapse{{name}}" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>{{description}}</p>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<template name="review_comments">
+  <div class="panel panel-default">
+    <div class="panel-heading"><h4>Aroma</h4></div>
+    <div class="panel-body">
+      <p>{{comments.aroma}}</p>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading"><h4>Flavour</h4></div>
+    <div class="panel-body">
+      <p>{{comments.flavour}}</p>
+    </div>
+  </div>
+</template>
+
+
+<template name="review_score">
+  <div class="panel panel-default">
+    <div class="panel-heading"><h4>Score</h4></div>
+    <div class="panel-body">
+
+      <small>Aroma</small>
+      <div class="progress">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="12" style="width: 30%">
+          <span>4/12</span>
+        </div>
+      </div>
+      <small>Flavour</small>
+      <div class="progress">
+        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="20" style="width: 75%">
+          <span>15/20</span>
+        </div>
+      </div>
+    </div><!--/panel-body-->
+  </div><!--/panel-->
 </template>

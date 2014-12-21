@@ -12,18 +12,20 @@
         <a class="navbar-brand" href="/">Rate my brew</a>
       </div>
       <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav">
           <li><a href="/">Beers</a></li>
           <li><a href="/reviews">Reviews</a></li>
         </ul>
-        <form class="navbar-form navbar-left">
+        <!-- ToDo -->
+        <!-- <form class="navbar-form navbar-left">
           <input type="text" class="form-control" placeholder="Search...">
-        </form>
+        </form> -->
       </div>
     </div>
   </div>
 
-  <div class="container-fluid">
+  <div class="container-fluid" style="width: 90%">
+    <br/>
     {{> yield}}
   </div>
 </template>
@@ -32,7 +34,7 @@
 <template name="beers">
   <ul class="nav nav-sidebar">
     {{# each beers}}
-    <li id="beer_{{_id}}" class="beer"><a href="review/{{_id}}">{{name}}</a></li>
+    <li id="beer_{{_id}}" class="beer"><a href="score/{{_id}}">{{name}}</a></li>
     {{/each}}
   </ul>
 </template>
