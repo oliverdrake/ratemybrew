@@ -22,4 +22,10 @@ Router.map(function() {
     data: function() {
       return CaseSwaps.findOne({"_id": this.params._id});
     }});
+  this.route('swaps/edit/:_id', {
+    layoutTemplate: 'layout',
+    template: 'editCaseSwap',
+    data: function() {
+      return CaseSwaps.findOne({"_id": this.params._id});
+    }});
   });

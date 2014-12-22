@@ -17,12 +17,6 @@
       </div>
     </div>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading"><h4>Participants</h4></div>
-    <div class="panel-body">
-      {{> participants}}
-    </div>
-  </div>
 </template>
 
 
@@ -36,21 +30,4 @@
   </fieldset>
   <button type="submit" class="btn btn-primary">Create</button>
   {{/autoForm}}
-</template>
-
-
-<template name="participants">
-  {{#each participants}}
-  <p>{{_id}}</p>
-  {{/each}}
-  <form>
-
-
-    <!-- <input type="text" class="search" placeholder="Search..." value={{search_query}}> -->
-    <select id="invite_people">
-      {{#each people}}
-      <option value="{{_id}}">{{profile.name}}</option>
-      {{/each}}
-    </select>
-  </form>
 </template>

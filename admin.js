@@ -1,15 +1,12 @@
 AdminConfig = {
-  adminEmails: ['oliver@drake.ch'],
   collections: {
-    Beers: {auxCollections: []},
-    Reviews: {auxCollections: []},
-    CaseSwaps: {auxCollections: []},
+    Beers: {},
+    Reviews: {},
+    CaseSwaps: {},
     OffFlavours: {
-      auxCollections: [],
       templates: {
         new: "insertOffFlavourForm",
       }
-    },
-    Users: {auxCollections: []}
+    }
   }
 };
