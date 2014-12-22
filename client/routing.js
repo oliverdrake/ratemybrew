@@ -1,8 +1,3 @@
-OffFlavours = new Mongo.Collection("off-flavours");
-Beers = new Mongo.Collection("beers");
-Reviews = new Mongo.Collection("reviews");
-
-
 Router.map(function() {
   this.route('beers', {path: "/", layoutTemplate: 'layout'});
   this.route('score/:_id', {
@@ -17,18 +12,14 @@ Router.map(function() {
     data: function() {
       return Reviews.findOne(this.params._id);
     }});
-});
-
-
-if (Meteor.isClient) {
-
-
-  Template.beers.beers = function () {
-    return Beers.find({});
-  };
-
-
-
-
-
-}
+  this.route('swaps/add', {
+    layoutTemplate: 'layout',
+    template: 'addSwap'
+  });
+  this.route('swaps/:_id', {
+    layoutTemplate: 'layout',
+    template: 'caseSwap',
+    data: function() {
+      return CaseSwaps.findOne({"_id": this.params._id});
+    }});
+  });

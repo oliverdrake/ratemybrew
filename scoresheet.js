@@ -4,7 +4,6 @@ var off_flavours = OffFlavours.find();
 
 var fields = {};
 off_flavours.forEach(function(entry) {
-  console.log("adding" + entry);
   fields[entry.name] = {
     required: false
   };
@@ -20,21 +19,15 @@ fields["flavour"] = {
 };
 
 
-console.log(fields);
-
 Mesosphere({
   name:"reviewForm",
   method:"submitReview",
   template:"scoresheet",
   fields:fields,
   onFailure: function(erroredFields, formHandle) {
-    console.log("hi", erroredFields);
-    console.log(Mesosphere.Utils.getFormData(formHandle));
      Mesosphere.Utils.failureCallback(erroredFields, formHandle);
   },
   onSuccess: function(data) {
-    console.log(data);
-    console.log("success");
   }
 });
 
@@ -43,8 +36,6 @@ Meteor.methods({
   submitReview: function (rawData, templateData) {
     Mesosphere.reviewForm.validate(rawData, function(errors, formData){
         if(!errors){
-          console.log(formData);
-
           var reviewOffFlavours = [];
           off_flavours.forEach(function(off_flavour) {
             var name = off_flavour.name;
@@ -69,7 +60,6 @@ Meteor.methods({
           }
         }else{
             _(errors).each( function( value, key ) {
-              console.log(key+": "+value.message);
             });
         }
     });

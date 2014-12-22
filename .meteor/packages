@@ -9,3 +9,12 @@ insecure
 iron:router
 copleykj:mesosphere
 mizzao:bootstrap-3
+accounts-facebook
+accounts-ui
+aldeed:autoform
+aldeed:collection2
+yogiben:admin
+accounts-base
+accounts-password
+chrismbeckett:fontawesome4
+

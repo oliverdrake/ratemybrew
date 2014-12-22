@@ -22,3 +22,12 @@ label{
     max-width: 80%;
     margin: 0 auto;
 }
+
+#login-buttons {
+  padding-top: 18px;
+  padding-bottom: 15px;
+}
+
+.login-display-name {
+  color: #9d9d9d;
+}

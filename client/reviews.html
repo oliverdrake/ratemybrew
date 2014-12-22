@@ -1,37 +1,26 @@
 <template name="reviews">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-3">
-        <strong>Date</strong>
-      </div>
-      <div class="col-md-3">
-        <strong>Beer Name</strong>
-      </div>
-      <div class="col-md-3">
-        <strong>Aroma</strong>
-      </div>
-      <div class="col-md-3">
-        <strong>Flavour</strong>
-      </div>
-    </div>
-    {{#each reviews}}
-    <div class="row">
-      <div class="col-md-3">
-        {{submitted}}
-      </div>
-      <div class="col-md-3">
-        <a href="review/{{_id}}">{{beerName}}</a>
-      </div>
-      <div class="col-md-3">
-        {{comments.aroma}}
-      </div>
-      <div class="col-md-3 resizable">
-        <span>{{comments.flavour}}</span>
-      </div>
-    </div>
-    {{/each}}
-  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Beer Name</th>
+        <th>Aroma</th>
+        <th>Flavour</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each reviews}}
+      <tr>
+        <td>{{submitted}} <a href="/review/{{_id}}">details</a></td>
+        <td>{{beerName}}</td>
+        <td>{{comments.aroma}}</td>
+        <td>{{comments.flavour}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </template>
+
 
 <template name="review">
   <div class="container-fluid">
@@ -41,14 +30,14 @@
       <div class="col-lg-5">
         {{> review_score}}
 
-        {{> review_off_flavours}}
-
         <div class="panel panel-default">
           <div class="panel-heading"><h4>Vitals</h4></div>
           <div class="panel-body">
             <p>Reviewed by {{reviewer}} on {{submitted}}</p>
           </div>
         </div>
+
+        {{> review_off_flavours}}
 
       </div>
       <div class="col-lg-7">
@@ -57,6 +46,7 @@
     </div>
   </div>
 </template>
+
 
 <template name="review_off_flavours">
   <div class="panel panel-default">

@@ -1,0 +1,56 @@
+<template name="addSwap">
+  {{> insertSwapForm}}
+</template>
+
+
+<template name="caseSwap">
+  <div class="panel panel-default">
+    <div class="panel-heading"><h4>{{name}}</h4></div>
+    <div class="panel-body">
+      <p>{{description}}</p>
+      <p><strong>Swap date:</strong> {{swapDate}}</p>
+
+      <div class="progress">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="12" style="width: 30%">
+          <span>4/12 beers reviewed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading"><h4>Participants</h4></div>
+    <div class="panel-body">
+      {{> participants}}
+    </div>
+  </div>
+</template>
+
+
+<template name="insertSwapForm">
+  {{#autoForm collection="CaseSwaps" id="insertSwapForm" type="insert"}}
+  <fieldset>
+    <legend>Create a new case swap</legend>
+    {{> afQuickField name='name'}}
+    {{> afQuickField name='swapDate'}}
+    {{> afQuickField name='description' rows=6}}
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Create</button>
+  {{/autoForm}}
+</template>
+
+
+<template name="participants">
+  {{#each participants}}
+  <p>{{_id}}</p>
+  {{/each}}
+  <form>
+
+
+    <!-- <input type="text" class="search" placeholder="Search..." value={{search_query}}> -->
+    <select id="invite_people">
+      {{#each people}}
+      <option value="{{_id}}">{{profile.name}}</option>
+      {{/each}}
+    </select>
+  </form>
+</template>
