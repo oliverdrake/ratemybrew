@@ -1,4 +1,4 @@
 ratemybrew
 ==========
 
-Meteor app for rating homebrew
+Meteor app for rating homebrews and organising case swaps.
