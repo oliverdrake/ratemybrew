@@ -2,6 +2,38 @@ OffFlavours = new Mongo.Collection("off-flavours");
 Beers = new Mongo.Collection("beers");
 Reviews = new Mongo.Collection("reviews");
 CaseSwaps = new Mongo.Collection("case-swaps");
+Events = new Mongo.Collection("events");
+
+
+
+
+
+autoNow = function() {
+  if (this.isInsert) {
+    return new Date;
+  } else if (this.isUpsert) {
+    return {$setOnInsert: new Date};
+  } else {
+    this.unset();
+  }
+};
+
+Events.attachSchema(new SimpleSchema({
+  title: {
+    type: String,
+    label: "Title",
+    max: 200
+  },
+  body: {
+    type: String,
+    label: "Body"
+  },
+  created: {
+    type: Date,
+    label: "Created",
+    autoValue: autoNow
+  }
+}));
 
 
 OffFlavours.attachSchema(new SimpleSchema({
@@ -27,15 +59,7 @@ CaseSwaps.attachSchema(new SimpleSchema({
   },
   created: {
     type: Date,
-    autoValue: function() {
-      if (this.isInsert) {
-        return new Date;
-      } else if (this.isUpsert) {
-        return {$setOnInsert: new Date};
-      } else {
-        this.unset();
-      }
-    }
+    autoValue: autoNow
   },
   creatorId: {
     type: String,
@@ -77,3 +101,15 @@ CaseSwaps.attachSchema(new SimpleSchema({
     }
   }
 }));
+
+
+getUsersName = function(user) {
+  var name = "Unknown user";
+  if (user.hasOwnProperty("profile") && user.profile.hasOwnProperty("name")) {
+    name = user.profile.name;
+  }
+  else if (user.hasOwnProperty("username")) {
+    name = user.username;
+  }
+  return name;
+}

@@ -1,0 +1,15 @@
+<template name="news">
+  <div class="col-md-6 col-md-offset-3">
+    {{# each events}}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4>{{title}}</h4>
+        <p>{{humanizeCreated}}</p>
+      </div>
+      <div class="panel-body">
+        {{{body}}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</template>

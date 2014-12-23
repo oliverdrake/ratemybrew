@@ -1,5 +1,12 @@
 Router.map(function() {
-  this.route('beers', {path: "/", layoutTemplate: 'layout'});
+  this.route("news", {
+    path: "/",
+    layoutTemplate: "layout",
+    template: "news"})
+  this.route('beers', {
+    path: "/beers",
+    layoutTemplate: 'layout',
+    template: "beers"});
   this.route('score/:_id', {
     template: 'scoresheet',
     layoutTemplate: 'layout',
