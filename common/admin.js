@@ -3,10 +3,6 @@ AdminConfig = {
     Beers: {},
     Reviews: {},
     CaseSwaps: {},
-    OffFlavours: {
-      templates: {
-        new: "insertOffFlavourForm",
-      }
-    }
+    OffFlavours: {}
   }
 };

@@ -1,0 +1,7 @@
+<template name="beers">
+  <ul class="nav nav-sidebar">
+    {{# each beers}}
+    <li id="beer_{{_id}}" class="beer"><a href="score/{{_id}}">{{name}}</a></li>
+    {{/each}}
+  </ul>
+</template>

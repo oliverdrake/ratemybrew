@@ -13,7 +13,7 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li><a href="/">Beers</a></li>
+          <li><a href="/beers">Beers</a></li>
 
           {{> caseSwapsNav}}
 
@@ -44,15 +44,6 @@
       {{/each}}
     </ul>
   </li>
-</template>
-
-
-<template name="beers">
-  <ul class="nav nav-sidebar">
-    {{# each beers}}
-    <li id="beer_{{_id}}" class="beer"><a href="score/{{_id}}">{{name}}</a></li>
-    {{/each}}
-  </ul>
 </template>
 
 
