@@ -1,3 +1,5 @@
+Meteor.subscribe("caseSwaps");
+
 Template.participants.helpers({
   participants: function() {
     return CaseSwaps.findOne(this._id).participants;

@@ -35,3 +35,12 @@ OffFlavours.attachSchema(new SimpleSchema({
     optional: true
   }
 }));
+
+
+Beers.attachSchema(new SimpleSchema({
+  name: {
+    type: String,
+    label: "Name",
+    max: 200
+  }
+}));

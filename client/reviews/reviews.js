@@ -1,3 +1,6 @@
+Meteor.subscribe("reviews");
+Meteor.subscribe("offFlavours");
+
 Template.reviews.helpers({
   reviews: function() {
     return Reviews.find({}, {sort: {submitted: "desc"}});
