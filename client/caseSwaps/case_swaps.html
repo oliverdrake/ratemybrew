@@ -18,6 +18,15 @@
     </div>
   </div>
 
+  {{#if hasNotJoined }}
+  <div class="panel panel-default">
+    <div class="panel-heading"><h4>Join this swap?</h4></div>
+    <div class="panel-body">
+      {{> insertBeerForm}}
+    </div>
+  </div>
+  {{/if}}
+
   {{> participants}}
 
 </template>
@@ -36,13 +45,39 @@
 </template>
 
 
+<template name="insertBeerForm">
+      {{#autoForm collection="Beers" id="insertBeerForm" type="insert"}}
+      <fieldset>
+        <legend>Tell us about your beer</legend>
+        {{> afQuickField name='name'}}
+        {{> afQuickField name='description' rows=6}}
+      </fieldset>
+      <button type="submit" class="btn btn-primary">Add beer and join</button>
+      {{/autoForm}}
+
+</template>
+
+
 <template name="participants">
   <div class="panel panel-default">
     <div class="panel-heading"><h4>Participants</h4></div>
     <div class="panel-body">
-      {{#each participants}}
-      <p>{{this}}</p>
-      {{/each}}
+      <p>
+        {{#each joinedParticipants}}
+        <p>{{name}} is bringing {{beerName}}. <a href="/score/{{beerId}}">Review it</a></p>
+        {{/each}}
+      </p>
+
+      <p>
+        {{#if invitees}}
+          <strong>Invited:</strong>
+          {{#each invitees}}
+          <p>
+            {{name}}
+          </p>
+          {{/each}}
+        {{/if}}
+      </p>
 
       {{> inviteForm}}
 
@@ -52,10 +87,14 @@
 
 
 <template name="inviteForm">
-  {{#autoForm collection="CaseSwaps" id="inviteForm" type="method" meteormethod="invitePeopleToSwap"}}
-  <fieldset>
-    {{> afQuickField name='participants' label='Invite' options=userOpts}}
-  </fieldset>
-  <button type="submit" class="btn btn-primary">Invite</button>
-  {{/autoForm}}
+  <form>
+    <fieldset>
+      <select class="form-control">
+        {{#each userOpts}}
+        <option value="{{value}}">{{label}}</option>
+        {{/each}}
+      </select>
+    </fieldset>
+    <button type="submit" class="btn btn-primary">Invite</button>
+  </form>
 </template>

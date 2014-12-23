@@ -1,22 +1,71 @@
 Meteor.subscribe("caseSwaps");
 
-Template.participants.helpers({
-  participants: function() {
-    return CaseSwaps.findOne(this._id).participants;
+
+getAllParticipants = function(_id) {
+  swap = CaseSwaps.findOne(_id);
+  if (swap === undefined) {
+    return [];
+  }
+  return swap.participants;
+}
+
+
+getInvitees = function(participants) {
+  invitees = [];
+  participants.forEach(function(participant) {
+    if (!participant.joined) {
+      invitees.push(participant);
+    }
+  });
+  return invitees;
+}
+
+
+getJoinedParticipants = function(participants) {
+  joined = [];
+  participants.forEach(function(participant) {
+    if (participant.joined) {
+      participant.beerName = Beers.findOne({_id: participant.beerId}).name;
+      joined.push(participant);
+    }
+  });
+  return joined;
+}
+
+
+Template.caseSwap.helpers({
+  hasNotJoined: function() {
+    ids = [];
+    getInvitees(getAllParticipants(this._id)).forEach(function(invitee) {
+      ids.push(invitee.userId);
+    });
+    return ids.indexOf(Meteor.userId()) != -1;
   }
 });
+
+
+Template.participants.helpers({
+  joinedParticipants: function() {
+    return getJoinedParticipants(getAllParticipants(this._id));
+  },
+  invitees: function() {
+    return getInvitees(getAllParticipants(this._id));
+  }
+});
+
 
 
 Template.inviteForm.helpers({
   userOpts: function() {
     opts = [];
-    swap = CaseSwaps.findOne({_id: this._id});
     ids = [];
-    if (swap.hasOwnProperty("participants")) {
-      swap.participants.forEach(function(participant) {
+    allParticipants = getAllParticipants(this._id);
+    if (allParticipants !== undefined){
+      getAllParticipants(this._id).forEach(function(participant) {
         ids.push(participant.userId);
       });
     }
+
     Meteor.users.find({_id: {$nin: ids}}).forEach(function(user){
       console.log(getUsersName(user));
       opts.push({
@@ -32,11 +81,8 @@ Template.inviteForm.helpers({
 
 Template.inviteForm.events({
   "click .btn": function(event) {
-    console.log("yay click");
-    userIds = $('select').val();
-    if (userIds.length > 0) {
-      Meteor.call('invitePeopleToSwap', this._id, userIds);
-    }
+    userId = $('select').val();
+    Meteor.call('inviteToSwap', this._id, userId);
   }
 });
 
@@ -55,6 +101,18 @@ AutoForm.addHooks(['insertSwapForm'], {
           });
         }
         Router.go('/swaps/' + result);
+      }
+    }
+  }
+});
+
+
+AutoForm.addHooks(['insertBeerForm'], {
+  after: {
+    insert: function(error, result) {
+      if (error === undefined) {
+        swapId = Router.current().params._id;
+        Meteor.call('joinSwap', swapId, Meteor.userId(), result);
       }
     }
   }

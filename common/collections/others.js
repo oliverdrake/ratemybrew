@@ -42,5 +42,9 @@ Beers.attachSchema(new SimpleSchema({
     type: String,
     label: "Name",
     max: 200
+  },
+  description: {
+    type: String,
+    label: "Description"
   }
 }));

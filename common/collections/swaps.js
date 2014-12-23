@@ -36,6 +36,19 @@ CaseSwaps.attachSchema(new SimpleSchema({
     type: [Object],
     optional: true
   },
+  "participants.$.name": {
+    type: String,
+  },
+  "participants.$.joined": {
+    type: Boolean,
+  },
+  "participants.$.userId": {
+    type: String,
+  },
+  "participants.$.beerId": {
+    type: String,
+    optional: true
+  },
   invitees: {
     type: [String],
     label: "Invitees",
