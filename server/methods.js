@@ -11,8 +11,6 @@ Meteor.methods({
         "beerIds": []
       });
     });
-    console.log({_id: swapId},
-      {$addToSet: {participants: {$each: newParticipants}}});
     CaseSwaps.update({_id: swapId},
       {$addToSet: {participants: {$each: newParticipants}}});
   }

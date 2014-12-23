@@ -54,6 +54,7 @@ AutoForm.addHooks(['insertSwapForm'], {
             body: userName + ' created a new case swap: <a href="/swaps/' + swap._id + '">' + swap.name + "</a>"
           });
         }
+        Router.go('/swaps/' + result);
       }
     }
   }

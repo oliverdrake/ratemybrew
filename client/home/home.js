@@ -13,6 +13,7 @@ Template.news.helpers({
       transform: function(event) {
         event.humanizeCreated = moment(event.created).fromNow();
         return event;
-      }});
+      },
+      limit: 50});
     }
   });
