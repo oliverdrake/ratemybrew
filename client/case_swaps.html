@@ -17,6 +17,9 @@
       </div>
     </div>
   </div>
+
+  {{> participants}}
+
 </template>
 
 
@@ -29,5 +32,30 @@
     {{> afQuickField name='description' rows=6}}
   </fieldset>
   <button type="submit" class="btn btn-primary">Create</button>
+  {{/autoForm}}
+</template>
+
+
+<template name="participants">
+  <div class="panel panel-default">
+    <div class="panel-heading"><h4>Participants</h4></div>
+    <div class="panel-body">
+      {{#each participants}}
+      <p>{{this}}</p>
+      {{/each}}
+
+      {{> inviteForm}}
+
+    </div>
+  </div>
+</template>
+
+
+<template name="inviteForm">
+  {{#autoForm collection="CaseSwaps" id="inviteForm" type="method" meteormethod="invitePeopleToSwap"}}
+  <fieldset>
+    {{> afQuickField name='participants' label='Invite' options=userOpts}}
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Invite</button>
   {{/autoForm}}
 </template>

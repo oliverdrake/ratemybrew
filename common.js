@@ -83,6 +83,10 @@ CaseSwaps.attachSchema(new SimpleSchema({
     label: "Description",
     optional: true
   },
+  participants: {
+    type: [Object],
+    optional: true
+  },
   invitees: {
     type: [String],
     label: "Invitees",
