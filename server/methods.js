@@ -23,8 +23,8 @@ Meteor.methods({
 
     CaseSwaps.update(
       {_id: swapId, participants: {$elemMatch: {userId: userId}}},
-    {$set: {"participants.$.joined": true, "participants.$.beerId": beerId}});
+      {$set: {"participants.$.joined": true, "participants.$.beerId": beerId}});
 
-    Events.insert({title: "Joined swap", body: name + " has joined " + swap.name})
+    Events.insert({title: "Joined swap", body: name + " has joined " + swap.name});
   }
 });
