@@ -13,8 +13,8 @@
       <tr>
         <td>{{submitted}} <a href="/review/{{_id}}">details</a></td>
         <td>{{beerName}}</td>
-        <td>{{comments.aroma}}</td>
-        <td>{{comments.flavour}}</td>
+        <td>{{aroma}}</td>
+        <td>{{flavour}}</td>
       </tr>
       {{/each}}
     </tbody>
@@ -80,14 +80,14 @@
   <div class="panel panel-default">
     <div class="panel-heading"><h4>Aroma</h4></div>
     <div class="panel-body">
-      <p>{{comments.aroma}}</p>
+      <p>{{aroma}}</p>
     </div>
   </div>
 
   <div class="panel panel-default">
     <div class="panel-heading"><h4>Flavour</h4></div>
     <div class="panel-body">
-      <p>{{comments.flavour}}</p>
+      <p>{{flavour}}</p>
     </div>
   </div>
 </template>

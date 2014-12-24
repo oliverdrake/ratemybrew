@@ -9,21 +9,15 @@
       </div>
     </div>
 
-    <form name="reviewForm">
-      <div class="row">
-        <div class="form-group">
-          <input type="hidden" value="{{_id}}" name="beerId">
-        </div>
-        <div class="col-md-5">
-          {{> off_flavours}}
-        </div>
-        <div class="col-md-7">
-          {{> scoring}}
-        </div>
-      </div>
-    </form>
+    {{> insertReviewForm}}
+
   </div>
 </template>
+
+<template name="insertReviewForm">
+  {{> quickForm collection="Reviews" id="insertReviewForm" type="insert" omitFields="beerId,submitted,beerName"}}
+</template>
+
 
 <template name="scoring">
   <div class="form-group">
