@@ -3,7 +3,7 @@ Meteor.subscribe("caseSwaps");
 
 getAllParticipants = function(_id) {
   swap = CaseSwaps.findOne(_id);
-  if (swap === undefined) {
+  if (swap === undefined || !swap.hasOwnProperty("participants")) {
     return [];
   }
   return swap.participants;
@@ -36,10 +36,10 @@ getJoinedParticipants = function(participants) {
 Template.caseSwap.helpers({
   hasNotJoined: function() {
     ids = [];
-    getInvitees(getAllParticipants(this._id)).forEach(function(invitee) {
-      ids.push(invitee.userId);
+    getJoinedParticipants(getAllParticipants(this._id)).forEach(function(user) {
+      ids.push(user.userId);
     });
-    return ids.indexOf(Meteor.userId()) != -1;
+    return ids.indexOf(Meteor.userId()) == -1;
   }
 });
 

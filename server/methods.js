@@ -12,9 +12,19 @@ Meteor.methods({
   },
 
   joinSwap: function(swapId, userId, beerId) {
-    console.log(userId + " has joined swap " + swapId);
+    name = getUsersName(Meteor.users.findOne({_id: userId}));
+    swap = CaseSwaps.findOne({_id: swapId});
+
+    console.log(name + " has joined swap " + swapId);
+
+    if (CaseSwaps.find({_id: swapId, participants: {$elemMatch: {userId: userId}}}).count() == 0) {
+      Meteor.call('inviteToSwap', swapId, userId);
+    }
+
     CaseSwaps.update(
       {_id: swapId, participants: {$elemMatch: {userId: userId}}},
     {$set: {"participants.$.joined": true, "participants.$.beerId": beerId}});
+
+    Events.insert({title: "Joined swap", body: name + " has joined " + swap.name})
   }
 });

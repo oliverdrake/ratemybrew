@@ -29,6 +29,8 @@
 
   {{> participants}}
 
+  {{> inviteForm}}
+
 </template>
 
 
@@ -79,22 +81,25 @@
         {{/if}}
       </p>
 
-      {{> inviteForm}}
-
     </div>
   </div>
 </template>
 
 
 <template name="inviteForm">
-  <form>
-    <fieldset>
-      <select class="form-control">
-        {{#each userOpts}}
-        <option value="{{value}}">{{label}}</option>
-        {{/each}}
-      </select>
-    </fieldset>
-    <button type="submit" class="btn btn-primary">Invite</button>
-  </form>
+  <div class="panel panel-default">
+    <div class="panel-heading"><h4>Invite</h4></div>
+    <div class="panel-body">
+      <form>
+        <fieldset>
+          <select class="form-control">
+            {{#each userOpts}}
+            <option value="{{value}}">{{label}}</option>
+            {{/each}}
+          </select>
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Invite</button>
+      </form>
+    </div>
+  </div>
 </template>
