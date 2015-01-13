@@ -1,6 +1,6 @@
 <template name="scoresheet">
   <div class="container-fluid">
-    <h1 class="page-header">Rate {{name}}</h1>
+    <h1 class="page-header">Rate {{#if usersName}} {{usersName}}'s {{/if}} {{name}}</h1>
 
     <div class="panel panel-default">
       <div class="panel-heading"><h4>Description</h4></div>
@@ -15,7 +15,7 @@
 </template>
 
 <template name="insertReviewForm">
-  {{> quickForm collection="Reviews" id="insertReviewForm" type="insert" omitFields="beerId,submitted,beerName"}}
+  {{> quickForm collection="Reviews" id="insertReviewForm" type="insert" omitFields="beerId,submitted,beerName,reviewerId"}}
 </template>
 
 

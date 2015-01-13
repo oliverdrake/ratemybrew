@@ -7,3 +7,8 @@ autoNow = function() {
     this.unset();
   }
 };
+
+
+currentUserId = function() {
+  return Meteor.user()._id;
+};

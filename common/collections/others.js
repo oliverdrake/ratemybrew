@@ -4,25 +4,6 @@ Reviews = new Mongo.Collection("reviews");
 Events = new Mongo.Collection("events");
 
 
-// var off_flavours = OffFlavours.find();
-//
-// var fields = {};
-// off_flavours.forEach(function(entry) {
-//   fields[entry.name] = {
-//     type: Boolean,
-//     optional: true
-//   };
-// });
-// fields["beerId"] = {
-//   type: String
-// };
-// fields["aroma"] = {
-//   type: String
-// };
-// fields["flavour"] = {
-//   type: String
-// };
-
 
 
 Reviews.attachSchema(new SimpleSchema({
@@ -51,6 +32,11 @@ Reviews.attachSchema(new SimpleSchema({
     type: Date,
     label: "Submitted",
     autoValue: autoNow
+  },
+  reviewerId: {
+    type: String,
+    label: "Reviewer",
+    autoValue: currentUserId
   }
 }));
 

@@ -112,6 +112,7 @@ AutoForm.addHooks(['insertBeerForm'], {
     insert: function(error, result) {
       if (error === undefined) {
         swapId = Router.current().params._id;
+        Beers.update({_id: result}, {$set: {userId: Meteor.userId}});
         Meteor.call('joinSwap', swapId, Meteor.userId(), result);
       }
     }
