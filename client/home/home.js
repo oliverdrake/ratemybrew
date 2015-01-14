@@ -2,7 +2,7 @@ Meteor.subscribe("caseSwaps");
 Meteor.subscribe("events");
 
 Template.caseSwapsNav.swaps = function () {
-  return CaseSwaps.find({"creatorId": Meteor.userId()});
+  return CaseSwaps.find({});
 };
 
 

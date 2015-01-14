@@ -4,33 +4,59 @@
 
 
 <template name="caseSwap">
-  <div class="panel panel-default">
-    <div class="panel-heading"><h4>{{name}}</h4></div>
-    <div class="panel-body">
-      <p>{{description}}</p>
-      <p><strong>Swap date:</strong> {{swapDate}}</p>
+  <div class="row-fluid">
+    <div class="col-md-6">
+      <div class="row-fluid">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h3>{{name}}</h3></div>
+          <div class="panel-body">
+            <p>{{description}}</p>
+            <p><strong>Swap date:</strong> {{prettifyDate swapDate}}</p>
 
-      <div class="progress">
-        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="12" style="width: 30%">
-          <span>4/12 beers reviewed</span>
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" role="progressbar"
+                  aria-valuenow="4" aria-valuemin="0" aria-valuemax="12" style="width: 30%">
+                <span>4/12 beers reviewed</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  {{#if hasNotJoined }}
-  <div class="panel panel-default">
-    <div class="panel-heading"><h4>Join this swap?</h4></div>
-    <div class="panel-body">
-      {{> insertBeerForm}}
+    <div class="col-md-6">
+      <div class="row-fluid">
+        {{> participants}}
+      </div>
+      <div class="row-fluid">
+        {{#if hasNotJoined }}
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4>Join this swap?</h4></div>
+          <div class="panel-body">
+            {{> insertBeerForm}}
+          </div>
+        </div>
+        {{else}}
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4>Your Beer</h4></div>
+          <div class="panel-body">
+            {{> myReviews}}
+          </div>
+        </div>
+        {{/if}}
+      </div>
     </div>
   </div>
-  {{/if}}
+</template>
 
-  {{> participants}}
 
-  <!-- {{> inviteForm}} -->
-
+<template name="myReviews">
+  {{#each reviews}}
+    <p>
+      {{reviewersName}}'s <a href="/review/{{_id}}">review</a>
+      <small>({{prettifyDate submitted}})</small>
+    </p>
+  {{/each}}
 </template>
 
 
@@ -48,15 +74,14 @@
 
 
 <template name="insertBeerForm">
-      {{#autoForm collection="Beers" id="insertBeerForm" type="insert"}}
-      <fieldset>
-        <legend>Tell us about your beer</legend>
-        {{> afQuickField name='name'}}
-        {{> afQuickField name='description' rows=6}}
-      </fieldset>
-      <button type="submit" class="btn btn-primary">Add beer and join</button>
-      {{/autoForm}}
-
+    {{#autoForm collection="Beers" id="insertBeerForm" type="insert"}}
+    <fieldset>
+      <legend>Tell us about your beer</legend>
+      {{> afQuickField name='name'}}
+      {{> afQuickField name='description' rows=6}}
+    </fieldset>
+    <button type="submit" class="btn btn-primary">Add beer and join</button>
+    {{/autoForm}}
 </template>
 
 
@@ -66,40 +91,14 @@
     <div class="panel-body">
       <p>
         {{#each joinedParticipants}}
-        <p>{{name}} is bringing {{beerName}}. <a href="/score/{{beerId}}">Review it</a></p>
+        <p>
+          {{name}} is bringing {{beerName}}.
+          {{#if openForReview}}
+          <a href="/score/{{beerId}}">Review it</a>
+          {{/if}}
+        </p>
         {{/each}}
       </p>
-
-      <p>
-        {{#if invitees}}
-          <strong>Invited:</strong>
-          {{#each invitees}}
-          <p>
-            {{name}}
-          </p>
-          {{/each}}
-        {{/if}}
-      </p>
-
     </div>
   </div>
 </template>
-
-
-<!-- <template name="inviteForm">
-  <div class="panel panel-default">
-    <div class="panel-heading"><h4>Invite</h4></div>
-    <div class="panel-body">
-      <form>
-        <fieldset>
-          <select class="form-control">
-            {{#each userOpts}}
-            <option value="{{value}}">{{label}}</option>
-            {{/each}}
-          </select>
-        </fieldset>
-        <button type="submit" class="btn btn-primary">Invite</button>
-      </form>
-    </div>
-  </div>
-</template> -->

@@ -1,44 +1,6 @@
 OffFlavours = new Mongo.Collection("off-flavours");
 Beers = new Mongo.Collection("beers");
-Reviews = new Mongo.Collection("reviews");
 Events = new Mongo.Collection("events");
-
-
-
-
-Reviews.attachSchema(new SimpleSchema({
-  diacetyl: {
-    type: Boolean,
-    optional: true
-  },
-  acetaldehyde: {
-    type: Boolean,
-    optional: true
-  },
-  beerId: {
-    type: String
-  },
-  beerName: {
-    type: String,
-    optional: true
-  },
-  flavour: {
-    type: String
-  },
-  aroma: {
-    type: String
-  },
-  submitted: {
-    type: Date,
-    label: "Submitted",
-    autoValue: autoNow
-  },
-  reviewerId: {
-    type: String,
-    label: "Reviewer",
-    autoValue: currentUserId
-  }
-}));
 
 
 Events.attachSchema(new SimpleSchema({

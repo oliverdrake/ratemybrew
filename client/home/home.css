@@ -14,6 +14,10 @@ label{
 	display:inline;
 }
 
+.main-container {
+  padding: 3em;
+}
+
 .checkbox {
   margin: 10px 0 0 0;
 }

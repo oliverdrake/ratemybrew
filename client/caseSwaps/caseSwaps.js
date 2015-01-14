@@ -50,39 +50,35 @@ Template.participants.helpers({
   },
   invitees: function() {
     return getInvitees(getAllParticipants(this._id));
+  },
+  openForReview: function() {
+    return this.userId != Meteor.userId() &&
+      Reviews.find({beerId: this.beerId, reviewerId: Meteor.userId()}).count() == 0;
   }
 });
 
 
-
-Template.inviteForm.helpers({
-  userOpts: function() {
-    opts = [];
-    ids = [];
-    allParticipants = getAllParticipants(this._id);
-    if (allParticipants !== undefined){
-      getAllParticipants(this._id).forEach(function(participant) {
-        ids.push(participant.userId);
-      });
+Template.myReviews.helpers({
+  reviews: function() {
+    console.log(this);
+    if (Meteor.userId() === null) {
+      return [];
     }
 
-    Meteor.users.find({_id: {$nin: ids}}).forEach(function(user){
-      console.log(getUsersName(user));
-      opts.push({
-        _id: new Meteor.Collection.ObjectID()._str,
-        label: getUsersName(user),
-        value: user._id});
-      });
-      console.log(opts);
-      return opts;
+    var reviews = [];
+    var len = this.participants.length;
+    for (var i = 0; i < len; i++) {
+      if (this.participants[i].userId == Meteor.userId()) {
+        reviews = Reviews.find({beerId: this.participants[i].beerId});
+        // beer = Beers.findOne({_id: this.participants[i].beerId});
+      }
     }
-  });
 
-
-Template.inviteForm.events({
-  "click .btn": function(event) {
-    userId = $('select').val();
-    Meteor.call('inviteToSwap', this._id, userId);
+    return reviews;
+    // return Reviews.find({})
+  },
+  reviewersName: function() {
+    return getUsersName(Meteor.user({_id: this.reviewerId}));
   }
 });
 

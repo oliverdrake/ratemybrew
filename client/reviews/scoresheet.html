@@ -2,23 +2,60 @@
   <div class="container-fluid">
     <h1 class="page-header">Rate {{#if usersName}} {{usersName}}'s {{/if}} {{name}}</h1>
 
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4>Description</h4></div>
-      <div class="panel-body">
-        {{{description}}}
+    <div class="row-fluid">
+      <div class="col-md-8">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4>Description</h4></div>
+          <div class="panel-body">
+            {{{description}}}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4>Mode</h4></div>
+          <div class="panel-body">
+            <button type="button" class="btn btn-success btn-block" id="simpleMode">
+              Simple
+            </button>
+            <button type="button" class="btn btn-primary btn-block" id="advancedMode">
+              Advanced
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
-    {{> insertReviewForm}}
+    <div class="row-fluid">
+      <div class="col-md-12">
+        {{#if simple }}
+        {{> simpleInsertReviewForm}}
+        {{else}}
+        {{> advancedInsertReviewForm}}
+        {{/if}}
+      </div>
+    </div>
 
   </div>
 </template>
 
-<template name="insertReviewForm">
-  {{> quickForm collection="Reviews" id="insertReviewForm" type="insert" omitFields="beerId,submitted,beerName,reviewerId"}}
+<template name="simpleInsertReviewForm">
+  {{#autoForm collection="Reviews" id="insertReviewForm" type="insert" omitFields="beerId,beerName,submitted,reviewerId"}}
+  <fieldset>
+    <legend>What did you think of the beer?</legend>
+    {{> afQuickField name='comments' rows=10}}
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  {{/autoForm}}
+</template>
+
+<template name="advancedInsertReviewForm">
+  advanced, todo
 </template>
 
 
+<!--
 <template name="scoring">
   <div class="form-group">
     <div class="row comment">
@@ -58,4 +95,4 @@
 
 <template name="off_flavour">
 
-</template>
+</template> -->

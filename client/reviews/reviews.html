@@ -25,24 +25,48 @@
 <template name="review">
   <div class="container-fluid">
     <h1 class="page-header">{{beerName}} Review</h1>
+    {{> simple_results}}
+    <!-- {{> advanced_results}} -->
+  </div>
+</template>
 
-    <div class="row">
-      <div class="col-lg-5">
-        {{> review_score}}
 
-        <div class="panel panel-default">
-          <div class="panel-heading"><h4>Vitals</h4></div>
-          <div class="panel-body">
-            <p>Reviewed by {{reviewersName}} on {{submitted}}</p>
-          </div>
+<template name="simple_results">
+  <div class="row">
+    <div class="col-lg-5">
+      {{> vitals}}
+    </div>
+    <div class="col-lg-7">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4>Comments</h4></div>
+        <div class="panel-body">
+          <p>{{comments}}</p>
         </div>
-
-        {{> review_off_flavours}}
-
       </div>
-      <div class="col-lg-7">
-        {{> review_comments}}
-      </div>
+    </div>
+  </div>
+</template>
+
+
+<template name="advanced_results">
+  <div class="row">
+    <div class="col-lg-5">
+      {{> review_score}}
+      {{> vitals}}
+      {{> review_off_flavours}}
+    </div>
+    <div class="col-lg-7">
+      {{> review_comments}}
+    </div>
+  </div>
+</template>
+
+
+<template name="vitals">
+  <div class="panel panel-default">
+    <div class="panel-heading"><h4>Vitals</h4></div>
+    <div class="panel-body">
+      <p>Reviewed by {{reviewersName}} on {{prettifyDate submitted}}</p>
     </div>
   </div>
 </template>
