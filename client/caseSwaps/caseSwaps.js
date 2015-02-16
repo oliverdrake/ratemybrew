@@ -27,9 +27,7 @@ getNumReviewed = function(swapId) {
   participants = getJoinedParticipants(swapId);
   numReviewed = 0;
   participants.forEach(function(participant) {
-    if (Reviews.findOne({beerId: participant.beerId})) {
-      numReviewed ++;
-    }
+    numReviewed += Reviews.find({beerId: participant.beerId}).count();
   });
   return numReviewed;
 }

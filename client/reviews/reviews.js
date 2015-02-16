@@ -4,21 +4,11 @@ Meteor.subscribe("beers");
 Meteor.subscribe("users");
 
 Session.setDefault("reviewMode", "simple");
-// 
-//
-// Template.reviews.helpers({
-//   reviews: function() {
-//     return Reviews.find({}, {sort: {submitted: "desc"}});
-//   }
-// });
 
 
-Template.review.helpers({
+Template.vitals.helpers({
   reviewersName: function() {
     return getUsersName(Meteor.user({_id: this.reviewerId}));
-  },
-  offFlavours: function() {
-    return [];
   }
 });
 
