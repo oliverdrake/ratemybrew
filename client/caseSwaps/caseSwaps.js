@@ -10,17 +10,6 @@ getAllParticipants = function(_id) {
 }
 
 
-getInvitees = function(participants) {
-  invitees = [];
-  participants.forEach(function(participant) {
-    if (!participant.joined) {
-      invitees.push(participant);
-    }
-  });
-  return invitees;
-}
-
-
 getJoinedParticipants = function(participants) {
   joined = [];
   participants.forEach(function(participant) {
@@ -48,9 +37,6 @@ Template.participants.helpers({
   joinedParticipants: function() {
     return getJoinedParticipants(getAllParticipants(this._id));
   },
-  invitees: function() {
-    return getInvitees(getAllParticipants(this._id));
-  },
   openForReview: function() {
     return this.userId != Meteor.userId() &&
       Reviews.find({beerId: this.beerId, reviewerId: Meteor.userId()}).count() == 0;
@@ -70,12 +56,10 @@ Template.myReviews.helpers({
     for (var i = 0; i < len; i++) {
       if (this.participants[i].userId == Meteor.userId()) {
         reviews = Reviews.find({beerId: this.participants[i].beerId});
-        // beer = Beers.findOne({_id: this.participants[i].beerId});
       }
     }
 
     return reviews;
-    // return Reviews.find({})
   },
   reviewersName: function() {
     return getUsersName(Meteor.user({_id: this.reviewerId}));
