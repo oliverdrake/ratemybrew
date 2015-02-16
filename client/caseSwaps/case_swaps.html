@@ -15,8 +15,8 @@
 
             <div class="progress">
               <div class="progress-bar progress-bar-success" role="progressbar"
-                  aria-valuenow="4" aria-valuemin="0" aria-valuemax="12" style="width: 30%">
-                <span>4/12 beers reviewed</span>
+                  aria-valuenow="{{percentageReviewed}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percentageReviewed}}%">
+                <span>{{numReviewed}}/{{totalBeers}} beers reviewed</span>
               </div>
             </div>
           </div>

@@ -3,11 +3,14 @@ Meteor.subscribe("offFlavours");
 Meteor.subscribe("beers");
 Meteor.subscribe("users");
 
-Template.reviews.helpers({
-  reviews: function() {
-    return Reviews.find({}, {sort: {submitted: "desc"}});
-  }
-});
+Session.setDefault("reviewMode", "simple");
+// 
+//
+// Template.reviews.helpers({
+//   reviews: function() {
+//     return Reviews.find({}, {sort: {submitted: "desc"}});
+//   }
+// });
 
 
 Template.review.helpers({
@@ -20,16 +23,6 @@ Template.review.helpers({
 });
 
 
-// Template.off_flavours.helpers({
-//   off_flavours: function() {
-//     return OffFlavours.find({});
-//   }
-// });
-
-
-
-Session.setDefault("reviewMode", "simple");
-
 Template.scoresheet.helpers({
   usersName: function() {
     if (this !== undefined && this.hasOwnProperty('userId')) {
@@ -41,6 +34,7 @@ Template.scoresheet.helpers({
     return Session.equals("reviewMode", "simple");
   }
 });
+
 
 Template.scoresheet.events({
   'click #simpleMode': function() {

@@ -1,3 +1,12 @@
+Router.onBeforeAction(function() {
+  if (! Meteor.userId()) {
+    this.render('login');
+  } else {
+    this.next();
+  }
+});
+
+
 Router.map(function() {
   this.route("news", {
     path: "/",
@@ -12,7 +21,6 @@ Router.map(function() {
     layoutTemplate: 'layout',
     data: function() { return Beers.findOne(this.params._id); }
   });
-  this.route('reviews', {layoutTemplate: 'layout'});
   this.route('review/:_id', {
     template: 'review',
     layoutTemplate: 'layout',

@@ -13,13 +13,13 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li><a href="/beers">Beers</a></li>
-
+          {{#if currentUser}}
           {{> caseSwapsNav}}
-
-          <li><a href="/reviews">Reviews</a></li>
+          {{/if}}
           <li>{{> loginButtons}}</li>
+          {{#if isInRole 'admin'}}
           <li><a href="/admin">Admin</a></li>
+          {{/if}}
         </ul>
       </div>
     </div>
@@ -47,6 +47,7 @@
 </template>
 
 
-<template name="home">
-  Home
+<template name="login">
+  You'll need to either create an account or sign in using a social media
+  account before you can start using this app.
 </template>
