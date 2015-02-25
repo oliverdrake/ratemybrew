@@ -9,7 +9,6 @@ iron:router
 copleykj:mesosphere
 mizzao:bootstrap-3
 accounts-facebook
-accounts-ui
 aldeed:autoform
 aldeed:collection2
 yogiben:admin
@@ -18,3 +17,4 @@ accounts-password
 chrismbeckett:fontawesome4
 
 momentjs:moment
+ian:accounts-ui-bootstrap-3
