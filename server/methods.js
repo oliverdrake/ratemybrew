@@ -1,3 +1,18 @@
+getUsersName = function(user) {
+  if (user === undefined) {
+    console.warn("Could not find a user for id: " + userId);
+    return "";
+  }
+  var name = "Unknown user";
+  if (user.hasOwnProperty("profile") && user.profile.hasOwnProperty("name")) {
+    name = user.profile.name;
+  }
+  else if (user.hasOwnProperty("username")) {
+    name = user.username;
+  }
+  return name;
+}
+
 Meteor.methods({
   joinSwap: function(swapId, userId, beerId) {
     name = getUsersName(Meteor.users.findOne({_id: userId}));
@@ -14,18 +29,7 @@ Meteor.methods({
 
   getUsersName: function(userId) {
     user = Meteor.users.findOne({_id: userId});
-    if (user === undefined) {
-      console.warn("Could not find a user for id: " + userId);
-      return "";
-    }
-    var name = "Unknown user";
-    if (user.hasOwnProperty("profile") && user.profile.hasOwnProperty("name")) {
-      name = user.profile.name;
-    }
-    else if (user.hasOwnProperty("username")) {
-      name = user.username;
-    }
-    return name;
+    return getUsersName(user);
   }
 
 });
