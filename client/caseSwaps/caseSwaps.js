@@ -84,11 +84,22 @@ Template.myReviews.helpers({
     }
 
     return reviews;
-  },
-  reviewersName: function() {
-    return getUsersName(Meteor.user({_id: this.reviewerId}));
   }
 });
+
+
+Template.singleReview.helpers({
+  reviewersName: function() {
+    return Session.get("__reviewerName") || "Loading";
+  }
+})
+
+
+Template.singleReview.created = function() {
+  Meteor.call('getUsersName', this.data.reviewerId, function(err, result){
+    Session.set("__reviewerName", result);
+  });
+}
 
 
 AutoForm.addHooks(['insertSwapForm'], {
@@ -97,8 +108,7 @@ AutoForm.addHooks(['insertSwapForm'], {
       if (error === undefined) {
         swap = CaseSwaps.findOne({_id: result});
         if (swap != undefined){
-          creator = Meteor.users.findOne({_id: swap.creatorId});
-          var userName = getUsersName(creator);
+          var userName = Meteor.call('getUsersName', swap.creatorId);
           Events.insert({
             title: "New case swap",
             body: userName + ' created a new case swap: ' +

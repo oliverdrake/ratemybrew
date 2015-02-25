@@ -9,6 +9,10 @@ Schemas.SimpleReviewSchema = new SimpleSchema({
     type: String,
     optional: true
   },
+  swapId: {
+    type: String,
+    optional: true
+  },
   submitted: {
     type: Date,
     label: "Submitted",

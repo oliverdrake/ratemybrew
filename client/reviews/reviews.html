@@ -44,6 +44,9 @@
     <div class="panel-heading"><h4>Vitals</h4></div>
     <div class="panel-body">
       <p>Reviewed by {{reviewersName}} on {{prettifyDate submitted}}</p>
+      {{#if swap}}
+      <p>Case Swap: <a href="/swaps/{{swap._id}}">{{swap.name}}</a></p>
+      {{/if}}
     </div>
   </div>
 </template>

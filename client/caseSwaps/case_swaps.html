@@ -52,11 +52,16 @@
 
 <template name="myReviews">
   {{#each reviews}}
-    <p>
-      {{reviewersName}}'s <a href="/review/{{_id}}">review</a>
-      <small>({{prettifyDate submitted}})</small>
-    </p>
+    {{> singleReview}}
   {{/each}}
+</template>
+
+
+<template name="singleReview">
+  <p>
+    {{reviewersName}}'s <a href="/review/{{_id}}">review</a>
+    <small>({{prettifyDate submitted}})</small>
+  </p>
 </template>
 
 
@@ -94,7 +99,7 @@
         <p>
           {{name}} is bringing {{beerName}}.
           {{#if openForReview}}
-          <a href="/score/{{beerId}}">Review it</a>
+          <a href="/score/sw/{{../_id}}/{{beerId}}">Review it</a>
           {{/if}}
         </p>
         {{/each}}

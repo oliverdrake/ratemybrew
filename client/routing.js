@@ -16,7 +16,7 @@ Router.map(function() {
     path: "/beers",
     layoutTemplate: 'layout',
     template: "beers"});
-  this.route('score/:_id', {
+  this.route('score/sw/:swapId/:_id', {
     template: 'scoresheet',
     layoutTemplate: 'layout',
     data: function() { return Beers.findOne(this.params._id); }

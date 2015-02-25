@@ -10,5 +10,22 @@ Meteor.methods({
     }}});
     Events.insert({title: "Joined swap", body: name + " has joined " + swap.name});
     console.log(name + " has joined swap " + swapId);
+  },
+
+  getUsersName: function(userId) {
+    user = Meteor.users.findOne({_id: userId});
+    if (user === undefined) {
+      console.warn("Could not find a user for id: " + userId);
+      return "";
+    }
+    var name = "Unknown user";
+    if (user.hasOwnProperty("profile") && user.profile.hasOwnProperty("name")) {
+      name = user.profile.name;
+    }
+    else if (user.hasOwnProperty("username")) {
+      name = user.username;
+    }
+    return name;
   }
+
 });

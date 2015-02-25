@@ -2,21 +2,36 @@ Meteor.subscribe("reviews");
 Meteor.subscribe("offFlavours");
 Meteor.subscribe("beers");
 Meteor.subscribe("users");
+Meteor.subscribe("swaps");
 
 Session.setDefault("reviewMode", "simple");
+Session.setDefault("__reviewerName", "");
 
 
 Template.vitals.helpers({
   reviewersName: function() {
-    return getUsersName(Meteor.user({_id: this.reviewerId}));
+    return Session.get("__reviewerName") || "";
+  },
+  swap: function() {
+    if (!this.swapId) {
+      return null;
+    }
+    return CaseSwaps.findOne({_id: this.swapId});
   }
 });
+
+
+Template.vitals.created = function() {
+  Meteor.call('getUsersName', this.data.reviewerId, function(err, result){
+    Session.set("__reviewerName", result);
+  });
+}
 
 
 Template.scoresheet.helpers({
   usersName: function() {
     if (this !== undefined && this.hasOwnProperty('userId')) {
-      return getUsersName(Meteor.user({_id: this.userId}));
+      return Meteor.call('getUsersName', this.userId);
     }
     return "";
   },
@@ -41,7 +56,9 @@ AutoForm.hooks({
     before: {
       insert: function(doc, template) {
         doc.beerId = Router.current().params._id;
-        doc.beerName = Beers.findOne({_id: doc.beerId}).name;
+        doc.swapId = Router.current().params.swapId;
+        beer = Beers.findOne({_id: doc.beerId});
+        doc.beerName = beer.name;
         return doc
       }
     },
@@ -49,7 +66,8 @@ AutoForm.hooks({
       insert: function(error, result) {
         if (error === undefined) {
           Reviews.update({_id: result}, {$set: {reviewer: Meteor.user()}});
-          Router.go('/review/' + result);
+          review = Reviews.findOne({_id: result});
+          Router.go('/swaps/' + review.swapId);
         }
         else {
           console.log(error);
