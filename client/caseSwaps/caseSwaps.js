@@ -108,11 +108,14 @@ AutoForm.addHooks(['insertSwapForm'], {
       if (error === undefined) {
         swap = CaseSwaps.findOne({_id: result});
         if (swap != undefined){
-          var userName = Meteor.call('getUsersName', swap.creatorId);
-          Events.insert({
-            title: "New case swap",
-            body: userName + ' created a new case swap: ' +
-              '<a href="/swaps/' + swap._id + '">' + swap.name + "</a>"
+          Meteor.call('getUsersName', swap.creatorId, function (error, result) {
+            if (error === undefined) {
+              Events.insert({
+                title: "New case swap",
+                body: result + ' created a new case swap: ' +
+                  '<a href="/swaps/' + swap._id + '">' + swap.name + "</a>"
+              });
+            }
           });
         }
         Router.go('/swaps/' + result);
