@@ -68,9 +68,8 @@ Template.participants.helpers({
 });
 
 
-Template.myReviews.helpers({
+Template.myBeers.helpers({
   reviews: function() {
-    console.log(this);
     if (Meteor.userId() === null) {
       return [];
     }
@@ -82,24 +81,51 @@ Template.myReviews.helpers({
         reviews = Reviews.find({beerId: this.participants[i].beerId});
       }
     }
-
     return reviews;
   }
 });
 
 
-Template.singleReview.helpers({
+Template.myReviews.helpers({
+  reviews: function() {
+    if (Meteor.userId() === null) {
+      return [];
+    }
+    return Reviews.find({reviewerId: Meteor.userId(), swapId: this._id});
+  }
+});
+
+
+Template.singleBeer.helpers({
   reviewersName: function() {
     return Session.get("__reviewerName") || "Loading";
   }
 })
 
 
-Template.singleReview.created = function() {
+Template.singleBeer.created = function() {
   Meteor.call('getUsersName', this.data.reviewerId, function(err, result){
     Session.set("__reviewerName", result);
   });
 }
+
+
+Template.singleReview.helpers({
+  submittersName: function() {
+    // var beer = Beers.findOne({_id: this.beerId});
+
+    var swap = CaseSwaps.findOne({_id: this.swapId});
+    var userName = "";
+    var beerId = this.beerId;
+
+    swap.participants.forEach(function (participant){
+      if (participant.beerId == beerId) {
+        userName = participant.name;
+      }
+    });
+    return userName;
+  }
+})
 
 
 AutoForm.addHooks(['insertSwapForm'], {

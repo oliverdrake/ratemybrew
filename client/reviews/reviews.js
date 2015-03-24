@@ -1,7 +1,6 @@
 Meteor.subscribe("reviews");
 Meteor.subscribe("offFlavours");
 Meteor.subscribe("beers");
-Meteor.subscribe("users");
 Meteor.subscribe("swaps");
 
 Session.setDefault("reviewMode", "simple");
@@ -22,10 +21,22 @@ Template.vitals.helpers({
 
 
 Template.vitals.created = function() {
-  Meteor.call('getUsersName', this.data.reviewerId, function(err, result){
-    Session.set("__reviewerName", result);
-  });
+  if (this.data !== null) {
+    Meteor.call('getUsersName', this.data.reviewerId, function(err, result){
+      Session.set("__reviewerName", result);
+    });
+  }
 }
+
+
+Template.simple_results.helpers({
+  editing: function() {
+    return Session.get("editing") == true;
+  },
+  canEdit: function() {
+    return this.reviewerId == Meteor.userId();
+  }
+});
 
 
 Template.scoresheet.helpers({
@@ -50,6 +61,7 @@ Template.scoresheet.events({
   }
 });
 
+Session.set("editing", false);
 
 AutoForm.hooks({
   insertReviewForm: {
@@ -72,6 +84,12 @@ AutoForm.hooks({
         else {
           console.log(error);
         }
+      },
+      update: function(error, result) {
+        if (error === undefined) {
+          Router.go('/review/' + this.docId);
+        }
+        Session.set("editing", false);
       }
     }
   }

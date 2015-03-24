@@ -15,9 +15,31 @@
     </div>
     <div class="col-lg-7">
       <div class="panel panel-default">
-        <div class="panel-heading"><h4>Comments</h4></div>
+        <div class="panel-heading">
+          <h4>Comments</h4>
+          {{#if editing}}
+          {{else}}
+          {{#if canEdit}}
+          <div class="pull-right">
+            <a href="/review/{{_id}}/edit" class="btn btn-primary">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+          </div>
+          {{/if}}
+          {{/if}}
+        </div>
         <div class="panel-body">
+          {{#if editing}}
+          <!-- {{> quickForm type="update" collection="Reviews" doc=this fields="comments"}} -->
+          {{#autoForm collection="Reviews" id="insertReviewForm" type="update" doc=this}}
+          <fieldset>
+            {{> afQuickField name='comments' rows=10}}
+          </fieldset>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          {{/autoForm}}
+          {{else}}
           <p>{{comments}}</p>
+          {{/if}}
         </div>
       </div>
     </div>

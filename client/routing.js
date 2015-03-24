@@ -27,6 +27,13 @@ Router.map(function() {
     data: function() {
       return Reviews.findOne(this.params._id);
     }});
+  this.route('review/:_id/edit', {
+    template: 'review',
+    layoutTemplate: 'layout',
+    data: function() {
+      Session.set("editing", true);
+      return Reviews.findOne(this.params._id);
+    }});
   this.route('swaps/add', {
     layoutTemplate: 'layout',
     template: 'addSwap'

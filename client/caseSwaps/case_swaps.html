@@ -40,6 +40,12 @@
         <div class="panel panel-default">
           <div class="panel-heading"><h4>Your Beer</h4></div>
           <div class="panel-body">
+            {{> myBeers}}
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4>Your Reviews</h4></div>
+          <div class="panel-body">
             {{> myReviews}}
           </div>
         </div>
@@ -50,6 +56,13 @@
 </template>
 
 
+<template name="myBeers">
+  {{#each reviews}}
+    {{> singleBeer}}
+  {{/each}}
+</template>
+
+
 <template name="myReviews">
   {{#each reviews}}
     {{> singleReview}}
@@ -57,9 +70,17 @@
 </template>
 
 
-<template name="singleReview">
+<template name="singleBeer">
   <p>
     {{reviewersName}}'s <a href="/review/{{_id}}">review</a>
+    <small>({{prettifyDate submitted}})</small>
+  </p>
+</template>
+
+
+<template name="singleReview">
+  <p>
+    {{submittersName}}'s <a href="/review/{{_id}}">{{beerName}}</a>
     <small>({{prettifyDate submitted}})</small>
   </p>
 </template>

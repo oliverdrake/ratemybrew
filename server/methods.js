@@ -23,7 +23,8 @@ Meteor.methods({
       "beerId": beerId,
       "name": name
     }}});
-    Events.insert({title: "Joined swap", body: name + " has joined " + swap.name});
+    Events.insert({title: "Joined swap", body: name + " has joined " +
+      '<a href="/swaps/' + swapId + '">' + swap.name + "</a>"});
     console.log(name + " has joined swap " + swapId);
   },
 
