@@ -33,10 +33,15 @@
     </div>
   </div>
 
-  <div class="container-fluid main-container" style="width: 90%">
-    <br/>
-    {{> yield}}
-  </div>
+  <!-- <div class="container-fluid main-container"> -->
+    <div class="row-fluid">
+      <div class="col-lg-10 col-lg-offset-1 col-xs-12 col-xs-offset-0">
+        <br/>
+        <br/>
+        {{> yield}}
+      </div>
+    </div>
+  <!-- </div> -->
 </template>
 
 
@@ -44,11 +49,11 @@
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Case Swaps<span class="caret"></span></a>
     <ul class="dropdown-menu" role="menu">
-      <li><a href="/swaps/add">Start a case swap</a></li>
+      <li><a href="/swaps/add" class="auto-collapse">Start a case swap</a></li>
       <li class="divider"></li>
       <li class="dropdown-header">Active Swaps</li>
       {{# each swaps}}
-      <li><a href="/swaps/{{_id}}">{{name}}</a></li>
+      <li><a href="/swaps/{{_id}}" class="auto-collapse">{{name}}</a></li>
       {{/each}}
     </ul>
   </li>

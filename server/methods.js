@@ -13,10 +13,13 @@ getUsersName = function(user) {
   return name;
 }
 
+
 Meteor.methods({
   joinSwap: function(swapId, userId, beerId) {
-    name = getUsersName(Meteor.users.findOne({_id: userId}));
-    swap = CaseSwaps.findOne({_id: swapId});
+    var user = Meteor.users.findOne({_id: userId});
+    var name = getUsersName(user);
+    var swap = CaseSwaps.findOne({_id: swapId});
+    var creator = Meteor.users.findOne({_id: swap.creatorId})
     CaseSwaps.update({_id: swapId}, {$addToSet: {participants: {
       "userId": userId,
       "joined": true,
@@ -31,6 +34,22 @@ Meteor.methods({
   getUsersName: function(userId) {
     user = Meteor.users.findOne({_id: userId});
     return getUsersName(user);
+  },
+
+  sendEmailToUser: function(userId, subject, text) {
+    var user = Meteor.users.findOne({_id: userId});
+    if (user.emails.length < 1) {
+      console.warn("UserId: " + userId + " has no email addresses, so can't send");
+      return;
+    }
+    var dest = user.emails[0].address;
+    console.log("Sending email to " + dest);
+    Email.send({
+      from: "ratemybrew@gmail.com",
+      to: dest,
+      subject: subject,
+      text: text
+    });
   }
 
 });

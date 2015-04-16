@@ -77,8 +77,17 @@ AutoForm.hooks({
     after: {
       insert: function(error, result) {
         if (error === undefined) {
-          Reviews.update({_id: result}, {$set: {reviewer: Meteor.user()}});
-          review = Reviews.findOne({_id: result});
+          var review = Reviews.findOne({_id: result});
+
+          Meteor.call("getUsersName", review.reviewerId, function(err, reviewerName) {
+            var submittersId = Beers.findOne({_id: review.beerId}).userId;
+            var subject = reviewerName + " has reviewed your beer";
+            var rootUrl = Meteor.absoluteUrl();
+            var text = "Your beer " + review.beerName + " has been reviewed by " + reviewerName + ".\n";
+            text = text.concat('\nGo to the review: ' + rootUrl + 'review/' + review._id);
+            text = text.concat('\n\nTheir comments about your beer:\n\n' + review.comments);
+            Meteor.call("sendEmailToUser", submittersId, subject, text);
+          })
           Router.go('/swaps/' + review.swapId);
         }
         else {

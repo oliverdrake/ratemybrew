@@ -33,13 +33,18 @@ getNumReviewed = function(swapId) {
 }
 
 
+hasJoined = function(participants) {
+  var ids = [];
+  participants.forEach(function(user) {
+    ids.push(user.userId);
+  });
+  return ids.indexOf(Meteor.userId()) != -1;
+}
+
+
 Template.caseSwap.helpers({
   hasNotJoined: function() {
-    ids = [];
-    getJoinedParticipants(this._id).forEach(function(user) {
-      ids.push(user.userId);
-    });
-    return ids.indexOf(Meteor.userId()) == -1;
+    return !hasJoined(getJoinedParticipants(this._id));
   },
   totalBeers: function() {
     return getTotalBeers(this._id);
@@ -62,8 +67,10 @@ Template.participants.helpers({
     return getJoinedParticipants(this._id);
   },
   openForReview: function() {
-    return this.userId != Meteor.userId() &&
-      Reviews.find({beerId: this.beerId, reviewerId: Meteor.userId()}).count() == 0;
+    var participants = getJoinedParticipants(Router.current().params._id);
+    var isMyBeer = this.userId == Meteor.userId();
+    var alreadyReviewed = Reviews.find({beerId: this.beerId, reviewerId: Meteor.userId()}).count() > 0;
+    return hasJoined(participants) && !isMyBeer && !alreadyReviewed;
   }
 });
 
@@ -112,8 +119,6 @@ Template.singleBeer.created = function() {
 
 Template.singleReview.helpers({
   submittersName: function() {
-    // var beer = Beers.findOne({_id: this.beerId});
-
     var swap = CaseSwaps.findOne({_id: this.swapId});
     var userName = "";
     var beerId = this.beerId;
@@ -156,7 +161,6 @@ AutoForm.addHooks(['insertBeerForm'], {
     insert: function(error, result) {
       if (error === undefined) {
         swapId = Router.current().params._id;
-        Beers.update({_id: result}, {$set: {userId: Meteor.userId}});
         Meteor.call('joinSwap', swapId, Meteor.userId(), result);
       }
     }

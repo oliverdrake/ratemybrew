@@ -17,3 +17,11 @@ Template.news.helpers({
       limit: 50});
     }
   });
+
+
+Template.layout.events({
+  // auto collapse navbar for certain actions
+  "click .nav li a.auto-collapse": function(e) {
+    $(".navbar-toggle").click();
+  }
+});
