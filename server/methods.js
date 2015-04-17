@@ -1,6 +1,6 @@
 getUsersName = function(user) {
   if (user === undefined) {
-    console.warn("Could not find a user for id: " + userId);
+    console.warn("Undefined user");
     return "";
   }
   var name = "Unknown user";

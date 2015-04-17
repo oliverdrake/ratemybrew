@@ -35,3 +35,10 @@ label{
 .login-display-name {
   color: #9d9d9d;
 }
+
+
+/*@media (min-width: 500px) and (max-width: 5000px) {
+   .navbar-toggle {
+       display: none !important;
+   }
+}*/

@@ -19,9 +19,24 @@ Template.news.helpers({
   });
 
 
+Template.layout.created = function() {
+  if (Accounts._verifyEmailToken) {
+    Accounts.verifyEmail(Accounts._verifyEmailToken, function(err) {
+      if (err != null) {
+        if (err.message = 'Verify email link expired [403]') {
+          console.log('Sorry this verification link has expired.')
+        }
+      } else {
+        console.log('Thank you! Your email address has been confirmed.')
+      }
+    });
+  }
+};
+
+
 Template.layout.events({
   // auto collapse navbar for certain actions
-  "click .nav li a.auto-collapse": function(e) {
+  "click a.auto-collapse": function(e) {
     $(".navbar-toggle").click();
   }
 });

@@ -1,7 +1,11 @@
 Router.onBeforeAction(function() {
-  if (! Meteor.userId()) {
+  if (!Meteor.userId() || Meteor.user() === undefined) {
     this.render('login');
-  } else {
+  }
+  else if (!Meteor.user().emails[0].verified) {
+    this.render('login');
+  }
+  else {
     this.next();
   }
 });
