@@ -50,6 +50,10 @@ Meteor.methods({
       subject: subject,
       text: text
     });
+  },
+
+  sendVerificationEmail: function(userId) {
+    Accounts.sendVerificationEmail(userId);
   }
 
 });

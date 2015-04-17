@@ -40,3 +40,16 @@ Template.layout.events({
     $(".navbar-toggle").click();
   }
 });
+
+
+Template.login.events({
+  'click .send-verification': function(evt, tmpl) {
+    evt.preventDefault(); // add this to prevent the button from submitting
+    if (Meteor.userId()) {
+      Meteor.call('sendVerificationEmail', Meteor.userId());
+      alert('verification email sent');
+    }
+
+
+  }
+})

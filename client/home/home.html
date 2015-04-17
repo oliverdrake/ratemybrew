@@ -33,15 +33,13 @@
     </div>
   </div>
 
-  <!-- <div class="container-fluid main-container"> -->
-    <div class="row-fluid">
-      <div class="col-lg-10 col-lg-offset-1 col-xs-12 col-xs-offset-0">
-        <br/>
-        <br/>
-        {{> yield}}
-      </div>
+  <div class="row-fluid">
+    <div class="col-lg-10 col-lg-offset-1 col-xs-12 col-xs-offset-0">
+      <br/>
+      <br/>
+      {{> yield}}
     </div>
-  <!-- </div> -->
+  </div>
 </template>
 
 
@@ -64,4 +62,7 @@
   <p>You'll need to either create an account or sign in using a social media
   account before you can start using this app.</p>
   <p>If you create an account you'll also need to verify your email address.</p>
+  {{#if currentUser}}
+  <p><button class="btn btn-primary send-verification">Send me a verification email</button></p>
+  {{/if}}
 </template>
