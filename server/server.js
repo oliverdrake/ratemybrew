@@ -12,8 +12,14 @@ Meteor.startup(function() {
   };
 
   Accounts.onCreateUser(function(options, user) {
-    user.profile = {};
-    console.log("onCreateUser: " + user)
+    console.log("onCreateUser: " + user._id);
+
+    if ("services" in user && "facebook" in user.services) {
+      user.emails = [{address: user.services.facebook.email, verified: false}];
+    }
+    else {
+      user.profiles = {};
+    }
 
     // we wait for Meteor to create the user before sending an email
     Meteor.setTimeout(function() {
